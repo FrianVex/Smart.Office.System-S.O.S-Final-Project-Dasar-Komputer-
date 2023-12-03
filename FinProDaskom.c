@@ -18,29 +18,38 @@ struct ruangan{
 void loading(){
 	int i;
 	system("cls");
+	printf("\n\nSMART OFFICE SYSTEM\n\n");
 	sleep(1);
 	//Menggunakan ASCII Code 437 Standard IBM untuk DOS untuk deklarasi char kosong dengan ASCII value 177 dan char terisi ASCII value 219
 	char kosong = 177;
 	char terisi = 219;
 
-	printf("\n\n\n\n\t");
+	printf("\n\n\t");
     printf("Loading...\n\n");
 	printf("\t");
 
-	// Print initial loading bar (loading bar kosong)
-	for (i = 0; i < 50; i++)
+	//Print Bar Kosong
+	for (i = 0; i < 30; i++)
 		printf("%c", kosong);
 
-	// Set the cursor again at starting point of loading bar
+	//Buat Bar Isi overlap dengan bar kosong
 	printf("\r");
 	printf("\t");
 
-	// Print loading bar progress
-	for (i = 0; i < 50; i++) {
+	//Print bar terisi
+	for (i = 0; i < 30; i++) {
 		printf("%c", terisi);
 
 		// Cepat lambatnya loading bar
-		Sleep(90);
+		Sleep(150);
+	}
+}
+
+void displayroom(){
+	int i;
+	printf("Tampilan Ruangan\n");
+	for (i = 0; i < 3; i++){
+		printf("A%d		A%d		A%d\n", i+1, i+4, i+7);
 	}
 }
 
@@ -48,32 +57,33 @@ int prelogin(struct ruangan *control, struct user *logindata){
 	
 	//input pilihan login
 	system("cls");
-	int pilihan;
-	printf("\n\n\n1.Login\n2.Shutdown\n: ");
-	scanf("%d", &pilihan);
+	printf("\n\nSMART OFFICE SYSTEM");
+	char pilihan[10];
+	printf("\n\nLOGIN\nSHUTDOWN\n: ");
+	scanf("%s", &pilihan);
 	fflush(stdin);
 	
 	//check nilai pada pilihan
-	switch (pilihan){
-		case(1):
-			system("cls");
-			login(control, logindata);			
-			break;
-		case(2):
-			break;
-		default:
-			printf("\nINVALID MENU");
-			sleep(1);
-			fflush(stdin);
-			return prelogin(control, logindata);
-			break;
+	if (strcmp(pilihan, "login") == 0){
+		login(control, logindata);
+	}
+	else if (strcmp(pilihan, "shutdown") == 0){
+		
+	}
+	else {
+		printf("\nINVALID MENU");
+		sleep(1);
+		fflush(stdin);
+		return prelogin(control, logindata);
 	}
 }
 
 int login(struct ruangan *control, struct user *logindata){
 	
+	system("cls");
+	printf("\n\nSMART OFFICE SYSTEM");
 	//input username
-	printf("\n\n\nMasukan Username : ");
+	printf("\n\nMasukan Username : ");
 	scanf("%[^\n]s", &logindata[1].username);
 	fflush(stdin);
 	
@@ -107,668 +117,724 @@ int start(struct ruangan *control, struct user *logindata){
 	strcpy(logindata[0].password, "12345");
 }
 
-void displayroom(){
-	int i;
-	printf("Tampilan Ruangan\n");
-	for (i = 0; i < 3; i++){
-		printf("A%d		A%d		A%d\n", i+1, i+4, i+7);
-	}
-}
-
 int ctos(struct ruangan *control, struct user *logindata){
 	system("cls");
-	int pilihan, indeks, con;
-	printf("Pilih Ruangan(1) atau Balik Ke Menu(2): ");
-	scanf("%d", &pilihan);
-	switch (pilihan){
-		case(1):
-			system("cls");
-			displayroom(control);
+	printf("\n\nSMART OFFICE SYSTEM\n\n");
+	int indeks;
+	char pilihan[10], con[10];
+	printf("RUANGAN\nMENU\n: ");
+	scanf("%s", &pilihan);
+	if (strcmp(pilihan, "ruangan") == 0){
+		system("cls");
+		printf("\n\nSMART OFFICE SYSTEM\n\n");
+		displayroom(control);
 			
-			printf("Pilih Ruangan : ");
-			scanf("%d", &indeks);
+		printf("\nPILIH RUANGAN : ");
+		scanf("%d", &indeks);
 			
-			pilihelektronik:
+		pilihelektronik:
 			system("cls");
-			printf("1. Pintu\n2. AC\n3. Lampu\n4. Kipas\n5. Keluar\n");
-			printf("\nPilih Elektronik : ");
-			scanf("%d", &con);
-			switch (con){
-				case(1):
-					if (control[indeks].door == 0) {
-						printf("Menyalakan Elektronik . . .\n");
-						sleep(1);
-						loading();
-						printf("\n\n	Elektronik Berhasil Dinyalakan\n");
-						control[indeks].door = 1;
-						sleep(2);
-						goto pilihelektronik;
-					}
-					else if (control[indeks].door == 1){
-						printf("Memematikan Elektronik . . .\n");
-						sleep(1);
-						loading();
-						printf("\n\n	Elektronik Berhasil Dimatikan\n");
-						control[indeks].door = 1;
-						sleep(2);
-						goto pilihelektronik;
-					}
-					else {
-						printf("Elektronik Sedang Rusak/Tidak Ada\n");
-						sleep(2);
-						goto pilihelektronik;
-					}
-					break;
-				case(2):
-					if (control[indeks].ac == 0) {
-						printf("Menyalakan Elektronik . . .\n");
-						sleep(1);
-						loading();
-						printf("\n\n	Elektronik Berhasil Dinyalakan\n");
-						control[indeks].ac = 1;
-						sleep(2);
-						goto pilihelektronik;
-					}
-					else if (control[indeks].ac == 1){
-						printf("Mematikan Elektronik . . .\n");
-						sleep(1);
-						loading();
-						printf("\n\n	Elektronik Berhasil Dimatikan\n");
-						control[indeks].ac = 1;
-						sleep(2);
-						goto pilihelektronik;
-					}
-					else {
-						printf("Elektronik Sedang Rusak/Tidak Ada\n");
-						sleep(2);
-						goto pilihelektronik;
-					}
-					break;
-				case(3):
-					if (control[indeks].lights == 0) {
-						printf("Menyalakan Elektronik . . .\n");
-						sleep(1);
-						loading();
-						printf("\n\n	Elektronik Berhasil Dinyalakan\n");
-						control[indeks].lights = 1;
-						sleep(2);
-						goto pilihelektronik;
-					}
-					else if (control[indeks].lights == 1){
-						printf("Mematikan Elektronik . . .\n");
-						sleep(1);
-						loading();
-						printf("\n\n	Elektronik Berhasil Dimatikan\n");
-						control[indeks].lights = 1;
-						sleep(2);
-						goto pilihelektronik;
-					}
-					else {
-						printf("Elektronik Sedang Rusak/Tidak Ada\n");
-						sleep(2);
-						goto pilihelektronik;
-					}
-					break;
-				case(4):
-					if (control[indeks].fan == 0) {
-						printf("Menyalakan Elektronik . . .\n");
-						sleep(1);
-						loading();
-						printf("\n\n	Elektronik Berhasil Dinyalakan\n");
-						control[indeks].fan = 1;
-						sleep(2);
-						goto pilihelektronik;
-					}
-					else if (control[indeks].fan == 1){
-						printf("Mematikan Elektronik . . .\n");
-						sleep(1);
-						loading();
-						printf("\n\n	Elektronik Berhasil Dimatikan\n");
-						control[indeks].fan = 1;
-						sleep(2);
-						goto pilihelektronik;
-					}
-					else {
-						printf("Elektronik Sedang Rusak/Tidak Ada\n");
-						sleep(2);
-						goto pilihelektronik;
-					}
-					break;
-				case(5):
-					return ctos(control, logindata);
-					break;
-				default:
-					printf("INVALID MENU");
-					fflush(stdin);
+			printf("\n\nSMART OFFICE SYSTEM\n\n");
+			printf("PINTU\nAC\nLAMPU\nKIPAS\nKELUAR\n");
+			printf("\nPILIH ELEKTRONIK : ");
+			scanf("%s", &con);
+			if (strcmp(con, "pintu") == 0){
+				if (control[indeks - 1].door == 0) {
+					printf("\nMenyalakan Elektronik . . .\n");
+					sleep(1);
+					loading();
+					printf("\n\n	Elektronik Berhasil Dinyalakan\n");
+					control[indeks - 1].door = 1;
+					sleep(2);
 					goto pilihelektronik;
-					break;
+				}
+				else if (control[indeks - 1].door == 1){
+					printf("\nMemematikan Elektronik . . .\n");
+					sleep(1);
+					loading();
+					printf("\n\n	Elektronik Berhasil Dimatikan\n");
+					control[indeks - 1].door = 1;
+					sleep(2);
+					goto pilihelektronik;
+				}
+				else {
+					printf("Elektronik Sedang Rusak/Tidak Ada\n");
+					sleep(2);
+					goto pilihelektronik;
+				}
 			}
-			break;
-		case(2):
-			return buletinboard(control);
-			break;
-		default:
-			printf("INVALID MENU");
-			fflush(stdin);
-			return ctos(control, logindata);
-			break;
+			else if (strcmp(con, "ac") == 0){
+				if (control[indeks - 1].ac == 0) {
+					printf("\nMenyalakan Elektronik . . .\n");
+					sleep(1);
+					loading();
+					printf("\n\n	Elektronik Berhasil Dinyalakan\n");
+					control[indeks - 1].ac = 1;
+					sleep(2);
+					goto pilihelektronik;
+				}
+				else if (control[indeks - 1].ac == 1){
+					printf("\nMematikan Elektronik . . .\n");
+					sleep(1);
+					loading();
+					printf("\n\n	Elektronik Berhasil Dimatikan\n");
+					control[indeks - 1].ac = 1;
+					sleep(2);
+					goto pilihelektronik;
+				}
+				else {
+					printf("Elektronik Sedang Rusak/Tidak Ada\n");
+					sleep(2);
+					goto pilihelektronik;
+				}
+			}
+			else if (strcmp(con, "lampu") == 0){
+				if (control[indeks - 1].lights == 0) {
+					printf("\nMenyalakan Elektronik . . .\n");
+					sleep(1);
+					loading();
+					printf("\n\n	Elektronik Berhasil Dinyalakan\n");
+					control[indeks - 1].lights = 1;
+					sleep(2);
+					goto pilihelektronik;
+				}
+				else if (control[indeks - 1].lights == 1){
+					printf("\nMematikan Elektronik . . .\n");
+					sleep(1);
+					loading();
+					printf("\n\n	Elektronik Berhasil Dimatikan\n");
+					control[indeks - 1].lights = 1;
+					sleep(2);
+					goto pilihelektronik;
+				}
+				else {
+					printf("Elektronik Sedang Rusak/Tidak Ada\n");
+					sleep(2);
+					goto pilihelektronik;
+				}
+			}
+			else if (strcmp(con, "kipas") == 0){
+				if (control[indeks - 1].fan == 0) {
+					printf("\nMenyalakan Elektronik . . .\n");
+					sleep(1);
+					loading();
+					printf("\n\n	Elektronik Berhasil Dinyalakan\n");
+					control[indeks - 1].fan = 1;
+					sleep(2);
+					goto pilihelektronik;
+				}
+				else if (control[indeks - 1].fan == 1){
+					printf("\nMematikan Elektronik . . .\n");
+					sleep(1);
+					loading();
+					printf("\n\n	Elektronik Berhasil Dimatikan\n");
+					control[indeks - 1].fan = 1;
+					sleep(2);
+					goto pilihelektronik;
+				}
+				else {
+					printf("\nElektronik Sedang Rusak/Tidak Ada\n");
+					sleep(2);
+					goto pilihelektronik;
+				}
+			}
+			else if (strcmp(con, "keluar") == 0){
+				return ctos(control, logindata);
+			}
+			else {
+				printf("INVALID MENU");
+				fflush(stdin);
+				goto pilihelektronik;
+			}
+	}
+	else if (strcmp(pilihan, "menu") == 0){
+		return buletinboard(control, logindata);
+	}
+	else {
+		printf("INVALID MENU");
+		fflush(stdin);
+		sleep(2);
+		return ctos(control, logindata);
 	}
 }
 
 /* 	Wikipedia Status Elektronik
 	0 = Mati
 	1 = Nyala
-	2 = Rusak
+	2 = Rusak/Tidak Ada
 	3 = Maintenance/Dimatikan Sistem
-	4 = Tidak ada
 */
 
 int terminal(struct ruangan *control, struct user *logindata){
 	system("cls");
+	printf("\n\nSMART OFFICE SYSTEM\n\n");
 	
-	int pilihan, indeks, con, st, pseudopilihan;
+	int indeks;
+	char pilihan[10], con[10], st[10], pseudopilihan[10];
 	time_t t;
 	srand((unsigned) time(&t));
 	
-	printf("Pilih Elektronik(1) atau Balik Ke Menu(2): ");
-	scanf("%d", &pilihan);
-	switch (pilihan){
-		case(1):
-			pilihelektronik:
+	printf("ELEKTRONIK\nMENU\n: ");
+	scanf("%s", &pilihan);
+	fflush(stdin);
+	if (strcmp(pilihan, "elektronik") == 0){
+		pilihelektronik:
 				
 			system("cls");
+			printf("\n\nSMART OFFICE SYSTEM\n\n");
+			printf("\nMAINTENANCE MODE\n\nPINTU\nAC\nLAMPU\nKIPAS\n\nKELUAR\n: ");
+			scanf("%s", &con);
+			fflush(stdin);
+			if (strcmp(con, "keluar") == 0) return terminal(control, logindata);	
 			
-			printf("Pilih Elektronik untuk dilihat\n1. Pintu\n2. AC\n3. Lampu\n4. Kipas\n5. Keluar\n: ");
-			scanf("%d", &con);
-			if (con == 5) return terminal(control, logindata);
+			system("cls");
+			printf("\n\nSMART OFFICE SYSTEM\n\n");
+			displayroom(control);
+			printf("\nPILIH RUANGAN : ");
+			scanf("%d", &indeks);
 			fflush(stdin);
 			
 			system("cls");
-			displayroom(control);
-			printf("\nPilih Ruangan : ");
-			scanf("%d", &indeks);
+			printf("\n\nSMART OFFICE SYSTEM\n\n");
 			
-			system("cls");
-			
-			switch (con){
-				case(1):
-					if (control[indeks].door < 2) {
-						printf("\nElektronik sedang berfungsi dengan baik\n\n");
+			if (strcmp(con, "pintu") == 0){
+				if (control[indeks - 1].door < 2) {
+						printf("ELEKTRONIK SEDANG BERFUNGSI\n\n");
+				}
+				else {
+						printf("ELEKTRONIK SEDANG TIDAK BERFUNGSI\n\n");
+				}
+				printf("MENU MAINTENANCE ELEKTRONIK:\nENABLE\nDISABLE\nTROUBLESHOOT\n\nKELUAR\n: ");
+				scanf("%s", &st);
+				
+				if (strcmp(st, "enable") == 0){
+					if (control[indeks - 1].door == 2) {
+						printf("ELEKTRONIK SEDANG RUSAK, TIDAK BISA DIAKTIFKAN\n");
+					}
+					else if (control[indeks - 1].door < 2){
+						printf("ELEKTRONIK SUDAH AKTIF\n");
 					}
 					else {
-						printf("\nElektronik sedang dalam Maintenance\n\n");
+						printf("MENGAKTIFKAN ELEKTRONIK\n");
+						sleep(1);
+						loading();
+						printf("\n	ELEKTRONIK BERHASIL DIAKTIFKAN\n");
+						control[indeks - 1].door = 0;
 					}
-					printf("Lakukan Perubahan Status:\n1. Enable\n2. Disable\n3. Troubleshoot\n4. Maintenance\n5. Keluar\n: ");
-					scanf("%d", &st);
-					switch (st){
-						case(1):
-							if (control[indeks].door % 2 == 0) {
-								printf("Elektronik sedang Rusak/Tidak Ada, Tidak Bisa dinyalakan\n");
-							}
-							else if (control[indeks].door < 2){
-								printf("Elektronik Sudah Menyala\n");
-							}
-							else {
-								printf("Menyalakan Elektronik\n");
-								sleep(1);
-								loading();
-								printf("Elektronik Berhasil Dinyalakan\n");
-								control[indeks].door = 0;
-							}
-							sleep(2);
-							goto pilihelektronik;
-							break;
-						case(2):
-							printf("Mematikan Elektronik\n\nMasukkan Status Elektronik\n1. Rusak\n2. Maintenance: ");
-							scanf("%d", &pseudopilihan);
-							switch(pseudopilihan){
-								case(1):
-									printf("Mematikan Elektronik\n");
-									sleep(1);
-									printf("Mengubah Status menjadi Rusak\n");
-									sleep(1);
-									loading();
-									printf("\n\n	Status Elektronik Berhasil diubah\n");
-									control[indeks].door = 2;
-								case(2):
-									printf("Mematikan Elektronik\n");
-									sleep(1);
-									printf("Mengubah Status menjadi Maintenance\n");
-									sleep(1);
-									loading();
-									printf("\n\n	Status Elektronik Berhasil diubah\n");
-									control[indeks].door = 3;
-							}
-							sleep(2);
-							goto pilihelektronik;
-							break;
-						case(3):
-							printf("Melakukan cek pada Elektronik\n");
-							if (control[indeks].door < 2) {
-								printf("\n\nElektronik sedang berfungsi dengan baik\n");
-							}
-							else if (control[indeks].door % 2 == 0){
-								printf("\n\nElektronik Rusak/Tidak Ada\n");
-							}
-							else {
-								printf("\n\nElektronik dalam Maintenance\n");
-							}
-							sleep(2);
-							goto pilihelektronik;
-							break;
-						case (4):
-							if (control[indeks].door < 2) {
-								printf("Elektronik dalam kondisi baik, Maintenance Tidak Bisa dilakukan\n");
-							}
-							else if (control[indeks].door == 4){
-								printf("Maintenance Tidak bisa dilakukan Elektronik Tidak Ada\n");
-							}
-							else {
-								printf("Mencoba Melakukan Maintenance pada Elektronik\n");
-								sleep(1);
-								loading();
-								int random = rand() % 100;
-								if (random < 70){
-									printf("\n\n	Elektronik Gagal Diperbaiki\n	Silahkan Coba lagi\n");
-								}
-								else {
-									printf("\n\n	Elektronik Berhasil DiPerbaiki\n");
-									control[indeks].door = 0;
-								}
-							}
-							sleep(2);
-							goto pilihelektronik;
-							break;
-						case(5):
-							goto pilihelektronik;
-							break;
-						default:
+					sleep(2);
+					goto pilihelektronik;
+				}
+				else if (strcmp(st, "disable") == 0){
+					if (control[indeks - 1].door  == 2) {
+						printf("ELEKTRONIK SUDAH RUSAK\n");
+					}
+					else if (control[indeks - 1].door == 3){
+						printf("ELEKTRONIK SUDAH DINONAKTIFKAN\n");
+					}
+					else {						
+						printf("\nMENONAKTIFKAN ELEKTRONIK . . .\n");
+						sleep(1);
+						printf("\nMENGAPA ELEKTRONIK DINONAKTIFKAN\nRUSAK\nMAINTENANCE\n: ");
+						
+						disdoor:
+						scanf("%s", &pseudopilihan);
+						fflush(stdin);
+						if (strcmp(pseudopilihan, "rusak") == 0){
+							printf("\n\nELEKTRONIK DINYATAKAN RUSAK\n");
+							sleep(1);
+							loading();
+							printf("\n\n	STATUS TELAH BERUBAH\n");
+							control[indeks - 1].door = 2;
+						}
+						else if (strcmp(pseudopilihan, "maintenance") == 0){
+							printf("\n\nELEKTRONIK PERLU MAINTENANCE\n");
+							sleep(1);
+							loading();
+							printf("\n\n	STATUS TELAH DIUBAH\n");
+							control[indeks - 1].door = 3;
+						}
+						else {
 							printf("INVALID MENU");
-							fflush(stdin);
-							break;
+							system("cls");
+							goto disdoor;
+						}
+				
 					}
-					break;
-				case(2):
-					if (control[indeks].ac < 2) {
-						printf("\nElektronik sedang berfungsi dengan baik\n\n");
+					sleep(2);
+					goto pilihelektronik;
+				}
+				else if (strcmp(st, "troubleshoot") == 0){
+					if (control[indeks - 1].door < 2) {
+						printf("ELEKTRONIK BERFUNGSI, TROUBLESHOOT TIDAK BISA DIJALANKAN\n");
+					}
+					else if (control[indeks - 1].door == 2){
+						printf("ELEKTRONIK RUSAK, LAKUKAN PERBAIKAN MANUAL\n");
 					}
 					else {
-						printf("\nElektronik sedang dalam Maintenance\n\n");
+						printf("MENCOBA MEMPERBAIKI ELEKTRONIK\n");
+						sleep(1);
+						loading();
+						int random = rand() % 100;
+						if (random < 70){
+							printf("\n\n	GAGAL DIPERBAIKI\n	SILAHKAN COBA KEMBALI\n");
+						}
+						else {
+							printf("\n\n	PERBAIKAN BERHASIL\n");
+							control[indeks - 1].door = 0;
+						}
 					}
-					printf("Lakukan Perubahan Status:\n1. Enable\n2. Disable\n3. Troubleshoot\n4. Maintenance\n5. Keluar\n: ");
-					scanf("%d", &st);
-					switch (st){
-						case(1):
-							if (control[indeks].ac % 2 == 0) {
-								printf("Elektronik sedang Rusak/Tidak Ada, Tidak Bisa dinyalakan\n");
-							}
-							else if (control[indeks].ac < 2){
-								printf("Elektronik Sudah Menyala\n");
-							}
-							else {
-								printf("Menyalakan Elektronik\n");
-								control[indeks].ac = 0;
-							}
-							sleep(2);
-							goto pilihelektronik;
-							break;
-						case(2):
-							printf("Mematikan Elektronik\n\nMasukkan Status Elektronik\n1. Rusak\n2. Maintenance: ");
-							scanf("%d", &pseudopilihan);
-							switch(pseudopilihan){
-								case(1):
-									printf("Mematikan Elektronik\n");
-									sleep(1);
-									printf("Mengubah Status menjadi Rusak\n");
-									sleep(1);
-									loading();
-									printf("\n\n	Status Elektronik Berhasil diubah\n");
-									control[indeks].ac = 2;
-								case(2):
-									printf("Mematikan Elektronik\n");
-									sleep(1);
-									printf("Mengubah Status menjadi Maintenance\n");
-									sleep(1);
-									loading();
-									printf("\n\n	Status Elektronik Berhasil diubah\n");
-									control[indeks].ac = 3;
-							}
-							sleep(2);
-							goto pilihelektronik;
-							break;
-						case(3):
-							printf("Melakukan cek pada Elektronik\n");
-							if (control[indeks].ac < 2) {
-								printf("\n\nElektronik sedang berfungsi dengan baik\n");
-							}
-							else if (control[indeks].ac % 2 == 0){
-								printf("\n\nElektronik Rusak/Tidak Ada\n");
-							}
-							else {
-								printf("\n\nElektronik dalam Maintenance\n");
-							}
-							sleep(2);
-							goto pilihelektronik;
-							break;
-						case (4):
-							if (control[indeks].ac < 2) {
-								printf("Elektronik dalam kondisi baik, Maintenance Tidak Bisa dilakukan\n");
-							}
-							else if (control[indeks].ac == 4){
-								printf("Maintenance Tidak bisa dilakukan Elektronik Tidak Ada\n");
-							}
-							else {
-								printf("Mencoba Melakukan Maintenance pada Elektronik\n");
-								sleep(1);
-								loading();
-								int random = rand() % 100;
-								if (random < 70){
-									printf("\n\n	Elektronik Gagal Diperbaiki\n	Silahkan Coba lagi\n");
-								}
-								else {
-									printf("\n\n	Elektronik Berhasil DiPerbaiki\n");
-									control[indeks].ac = 0;
-								}
-							}
-							sleep(2);
-							goto pilihelektronik;
-							break;
-						case(5):
-							goto pilihelektronik;
-							break;
-						default:
-							printf("INVALID MENU");
-							fflush(stdin);
-							break;
-					}
-					break;
-				case(3):
-					if (control[indeks].lights < 2) {
-						printf("\nElektronik sedang berfungsi dengan baik\n\n");
-					}
-					else {
-						printf("\nElektronik sedang dalam Maintenance\n\n");
-					}
-					printf("Lakukan Perubahan Status:\n1. Enable\n2. Disable\n3. Troubleshoot\n4. Maintenance\n5. Keluar\n: ");
-					scanf("%d", &st);
-					switch (st){
-						case(1):
-							if (control[indeks].lights % 2 == 0) {
-								printf("Elektronik sedang Rusak/Tidak Ada, Tidak Bisa dinyalakan\n");
-							}
-							else if (control[indeks].lights < 2){
-								printf("Elektronik Sudah Menyala\n");
-							}
-							else {
-								printf("Menyalakan Elektronik\n");
-								control[indeks].lights = 0;
-							}
-							sleep(2);
-							goto pilihelektronik;
-							break;
-						case(2):
-							printf("Mematikan Elektronik\n\nMasukkan Status Elektronik\n1. Rusak\n2. Maintenance: ");
-							scanf("%d", &pseudopilihan);
-							switch(pseudopilihan){
-								case(1):
-									printf("Mematikan Elektronik\n");
-									sleep(1);
-									printf("Mengubah Status menjadi Rusak\n");
-									sleep(1);
-									loading();
-									printf("\n\n	Status Elektronik Berhasil diubah\n");
-									control[indeks].lights = 2;
-								case(2):
-									printf("Mematikan Elektronik\n");
-									sleep(1);
-									printf("Mengubah Status menjadi Maintenance\n");
-									sleep(1);
-									loading();
-									printf("\n\n	Status Elektronik Berhasil diubah\n");
-									control[indeks].lights = 3;
-							}
-							sleep(2);
-							goto pilihelektronik;
-							break;
-						case(3):
-							printf("Melakukan cek pada Elektronik\n");
-							if (control[indeks].lights < 2) {
-								printf("\n\nElektronik sedang berfungsi dengan baik\n");
-							}
-							else if (control[indeks].lights % 2 == 0){
-								printf("\n\nElektronik Rusak/Tidak Ada\n");
-							}
-							else {
-								printf("\n\nElektronik dalam Maintenance\n");
-							}
-							sleep(2);
-							goto pilihelektronik;
-							break;
-						case (4):
-							if (control[indeks].lights < 2) {
-								printf("Elektronik dalam kondisi baik, Maintenance Tidak Bisa dilakukan\n");
-							}
-							else if (control[indeks].lights == 4){
-								printf("Maintenance Tidak bisa dilakukan Elektronik Tidak Ada\n");
-							}
-							else {
-								printf("Mencoba Melakukan Maintenance pada Elektronik\n");
-								sleep(1);
-								loading();
-								int random = rand() % 100;
-								if (random < 70){
-									printf("\n\n	Elektronik Gagal Diperbaiki\n		Silahkan Coba lagi\n");
-								}
-								else {
-									printf("\n\n	Elektronik Berhasil DiPerbaiki\n");
-									control[indeks].lights = 0;
-								}
-							}
-							sleep(2);
-							goto pilihelektronik;
-							break;
-						case(5):
-							goto pilihelektronik;
-							break;
-						default:
-							printf("INVALID MENU");
-							fflush(stdin);
-							break;
-					}
-					break;
-				case(4):
-					if (control[indeks].fan < 2) {
-						printf("\nElektronik sedang berfungsi dengan baik\n\n");
-					}
-					else {
-						printf("\nElektronik sedang dalam Maintenance\n\n");
-					}
-					printf("Lakukan Perubahan Status:\n1. Enable\n2. Disable\n3. Troubleshoot\n4. Maintenance\n5. Keluar\n: ");
-					scanf("%d", &st);
-					switch (st){
-						case(1):
-							if (control[indeks].fan % 2 == 0) {
-								printf("Elektronik sedang Rusak/Tidak Ada, Tidak Bisa dinyalakan\n");
-							}
-							else if (control[indeks].fan < 2){
-								printf("Elektronik Sudah Menyala\n");
-							}
-							else {
-								printf("Menyalakan Elektronik\n");
-								control[indeks].fan = 0;
-							}
-							sleep(2);
-							goto pilihelektronik;
-							break;
-						case(2):
-							printf("Mematikan Elektronik\n\nMasukkan Status Elektronik\n1. Rusak\n2. Maintenance: ");
-							scanf("%d", &pseudopilihan);
-							switch(pseudopilihan){
-								case(1):
-									printf("Mematikan Elektronik\n");
-									sleep(1);
-									printf("Mengubah Status menjadi Rusak\n");
-									sleep(1);
-									loading();
-									printf("\n\n	Status Elektronik Berhasil diubah\n");
-									control[indeks].fan = 2;
-								case(2):
-									printf("Mematikan Elektronik\n");
-									sleep(1);
-									printf("Mengubah Status menjadi Maintenance\n");
-									sleep(1);
-									loading();
-									printf("\n\n	Status Elektronik Berhasil diubah\n");
-									control[indeks].fan = 3;
-							}
-							sleep(2);
-							goto pilihelektronik;
-							break;
-						case(3):
-							printf("Melakukan cek pada Elektronik\n");
-							if (control[indeks].fan < 2) {
-								printf("\n\nElektronik sedang berfungsi dengan baik\n");
-							}
-							else if (control[indeks].fan % 2 == 0){
-								printf("\n\nElektronik Rusak/Tidak Ada\n");
-							}
-							else {
-								printf("\n\nElektronik dalam Maintenance\n");
-							}
-							sleep(2);
-							goto pilihelektronik;
-							break;
-						case (4):
-							if (control[indeks].fan < 2) {
-								printf("Elektronik dalam kondisi baik, Maintenance Tidak Bisa dilakukan\n");
-							}
-							else if (control[indeks].fan == 4){
-								printf("Maintenance Tidak bisa dilakukan Elektronik Tidak Ada\n");
-							}
-							else {
-								printf("Mencoba Melakukan Maintenance pada Elektronik\n");
-								sleep(1);
-								loading();
-								int random = rand() % 100;
-								if (random < 70){
-									printf("\n\n	Elektronik Gagal Diperbaiki\n	Silahkan Coba lagi\n");
-								}
-								else {
-									printf("\n\n	Elektronik Berhasil DiPerbaiki\n");
-									control[indeks].fan = 0;
-								}
-							}
-							sleep(2);
-							goto pilihelektronik;
-							break;
-						case(5):
-							goto pilihelektronik;
-							break;
-						default:
-							printf("INVALID MENU");
-							fflush(stdin);
-							break;
-					}
-					break;
-				case(5):
-					return ctos(control, logindata);
-					break;
-				default:
+					sleep(2);
+					goto pilihelektronik;
+				}
+				else {
 					printf("INVALID MENU");
 					fflush(stdin);
-					break;
+					sleep(1);
+					goto pilihelektronik;
+				}			
 			}
-			break;
-		case(2):
-			return buletinboard(control);
-			break;
-		default:
-			printf("INVALID MENU");
-			fflush(stdin);
-			break;
+			else if (strcmp(con, "ac") == 0){
+				if (control[indeks - 1].ac < 2) {
+					printf("ELEKTRONIK SEDANG BERFUNGSI\n\n");
+				}
+				else {
+					printf("ELEKTRONIK SEDANG TIDAK BERFUNGSI\n\n");
+				}
+				printf("MENU MAINTENANCE ELEKTRONIK:\nENABLE\nDISABLE\nTROUBLESHOOT\n\nKELUAR\n: ");
+				scanf("%s", &st);
+				fflush(stdin);
+				if (strcmp(st, "enable") == 0){
+					if (control[indeks - 1].ac == 2) {
+						printf("ELEKTRONIK SEDANG RUSAK, TIDAK BISA DIAKTIFKAN\n");
+					}
+					else if (control[indeks - 1].ac < 2){
+						printf("ELEKTRONIK SUDAH AKTIF\n");
+					}
+					else {
+						printf("MENGAKTIFKAN ELEKTRONIK\n");
+						sleep(1);
+						loading();
+						printf("\nELEKTRONIK BERHASIL DIAKTIFKAN\n");
+						control[indeks - 1].ac = 0;
+					}
+					sleep(2);
+					goto pilihelektronik;
+				}
+				else if (strcmp(st, "disable") == 0){
+					if (control[indeks - 1].ac == 2) {
+						printf("ELEKTRONIK SUDAH RUSAK\n");
+					}
+					else if (control[indeks - 1].ac == 3){
+						printf("ELEKTRONIK SUDAH DINONAKTIFKAN\n");
+					}
+					else {
+						printf("\nMENONAKTIFKAN ELEKTRONIK . . .\n");
+						sleep(1);
+						printf("\nMENGAPA ELEKTRONIK DINONAKTIFKAN\nRUSAK\nMAINTENANCE\n: ");
+						
+						disac:
+						scanf("%s", &pseudopilihan);
+						fflush(stdin);
+						if (strcmp(pseudopilihan, "rusak") == 0){
+							printf("\n\nELEKTRONIK DINYATAKAN RUSAK\n");
+							sleep(1);
+							loading();
+							printf("\n\n	STATUS TELAH BERUBAH\n");
+							control[indeks - 1].ac = 2;
+						}
+						else if (strcmp(pseudopilihan, "maintenance") == 0){
+							printf("\n\nELEKTRONIK PERLU MAINTENANCE\n");
+							sleep(1);
+							loading();
+							printf("\n\n	STATUS TELAH DIUBAH\n");
+							control[indeks - 1].ac = 3;
+						}
+						else {
+							printf("INVALID MENU");
+							system("cls");
+							goto disac;
+						}
+					}
+					sleep(2);
+					goto pilihelektronik;
+				}
+				else if (strcmp(st, "troubleshoot") == 0){
+					if (control[indeks - 1].ac < 2) {
+						printf("ELEKTRONIK BERFUNGSI, TROUBLESHOOT TIDAK BISA DIJALANKAN\n");
+					}
+					else if (control[indeks - 1].ac == 2){
+						printf("ELEKTRONIK RUSAK, LAKUKAN PERBAIKAN MANUAL\n");
+					}
+					else {
+						printf("MENCOBA MEMPERBAIKI ELEKTRONIK\n");
+						sleep(1);
+						loading();
+						int random = rand() % 100;
+						if (random < 70){
+							printf("\n\n	GAGAL DIPERBAIKI\n	SILAHKAN COBA KEMBALI\n");
+						}
+						else {
+							printf("\n\n	PERBAIKAN BERHASIL\n");
+							control[indeks - 1].ac = 0;
+						}
+					}
+					sleep(2);
+					goto pilihelektronik;
+				}
+				else {
+					printf("INVALID MENU");
+					fflush(stdin);
+					sleep(1);
+					goto pilihelektronik;
+				}			
+			}
+			else if (strcmp(con, "lampu") == 0){
+				if (control[indeks - 1].lights < 2) {
+						printf("ELEKTRONIK SEDANG BERFUNGSI\n\n");
+				}
+				else {
+						printf("ELEKTRONIK SEDANG TIDAK BERFUNGSI\n\n");
+				}
+				printf("MENU MAINTENANCE ELEKTRONIK:\nENABLE\nDISABLE\nTROUBLESHOOT\n\nKELUAR\n: ");
+				scanf("%s", &st);
+				fflush(stdin);
+				if (strcmp(st, "enable") == 0){
+					if (control[indeks - 1].lights == 2) {
+						printf("ELEKTRONIK SEDANG RUSAK, TIDAK BISA DIAKTIFKAN\n");
+					}
+					else if (control[indeks - 1].lights < 2){
+						printf("ELEKTRONIK SUDAH AKTIF\n");
+					}
+					else {
+						printf("MENGAKTIFKAN ELEKTRONIK\n");
+						sleep(1);
+						loading();
+						printf("\nELEKTRONIK BERHASIL DIAKTIFKAN\n");
+						control[indeks - 1].lights = 0;
+					}
+					sleep(2);
+					goto pilihelektronik;
+				}
+				else if (strcmp(st, "disable") == 0){
+					if (control[indeks - 1].lights == 2) {
+						printf("\nELEKTRONIK SUDAH RUSAK\n");
+					}
+					else if (control[indeks - 1].lights == 3){
+						printf("\nELEKTRONIK SUDAH DINONAKTIFKAN\n");
+					}
+					else {
+						
+						printf("\nMENONAKTIFKAN ELEKTRONIK . . .\n");
+						sleep(1);
+						printf("\nMENGAPA ELEKTRONIK DINONAKTIFKAN\nRUSAK\nMAINTENANCE\n: ");
+						
+						dislights:
+						scanf("%s", &pseudopilihan);
+						fflush(stdin);
+						if (strcmp(pseudopilihan, "rusak") == 0){
+							printf("\n\nELEKTRONIK DINYATAKAN RUSAK\n");
+							sleep(1);
+							loading();
+							printf("\n\n	STATUS TELAH BERUBAH\n");
+							control[indeks - 1].lights = 2;
+						}
+						else if (strcmp(pseudopilihan, "maintenance") == 0){
+							printf("\n\nELEKTRONIK PERLU MAINTENANCE\n");
+							sleep(1);
+							loading();
+							printf("\n\n	STATUS TELAH DIUBAH\n");
+							control[indeks - 1].lights = 3;
+						}
+						else {
+							printf("INVALID MENU");
+							system("cls");
+							goto dislights;
+						}
+					}
+					sleep(2);
+					goto pilihelektronik;
+				}
+				else if (strcmp(st, "troubleshoot") == 0){
+					if (control[indeks - 1].lights < 2) {
+						printf("ELEKTRONIK BERFUNGSI, TROUBLESHOOT TIDAK BISA DIJALANKAN\n");
+					}
+					else if (control[indeks - 1].lights == 2){
+						printf("ELEKTRONIK RUSAK, LAKUKAN PERBAIKAN MANUAL\n");
+					}
+					else {
+						printf("MENCOBA MEMPERBAIKI ELEKTRONIK\n");
+						sleep(1);
+						loading();
+						int random = rand() % 100;
+						if (random < 70){
+							printf("\n\n	GAGAL DIPERBAIKI\n	SILAHKAN COBA KEMBALI\n");
+						}
+						else {
+							printf("\n\n	PERBAIKAN BERHASIL\n");
+							control[indeks - 1].lights = 0;
+						}
+					}
+					sleep(2);
+					goto pilihelektronik;
+				}
+				else {
+					printf("INVALID MENU");
+					fflush(stdin);
+					sleep(1);
+					goto pilihelektronik;
+				}			
+			}
+			else if (strcmp(con, "kipas") == 0){
+				if (control[indeks - 1].fan < 2) {
+					printf("ELEKTRONIK SEDANG BERFUNGSI\n\n");
+				}
+				else {
+					printf("ELEKTRONIK SEDANG TIDAK BERFUNGSI\n\n");
+				}
+				printf("MENU MAINTENANCE ELEKTRONIK:\nENABLE\nDISABLE\nTROUBLESHOOT\n\nKELUAR\n: ");
+				scanf("%s", &st);
+				fflush(stdin);
+				if (strcmp(st, "enable") == 0){
+					if (control[indeks - 1].fan == 2) {
+						printf("ELEKTRONIK SEDANG RUSAK, TIDAK BISA DIAKTIFKAN\n");
+					}
+					else if (control[indeks - 1].fan < 2){
+						printf("ELEKTRONIK SUDAH AKTIF\n");
+					}
+					else {
+						printf("MENGAKTIFKAN ELEKTRONIK\n");
+						sleep(1);
+						loading();
+						printf("\nELEKTRONIK BERHASIL DIAKTIFKAN\n");
+						control[indeks - 1].fan = 0;
+					}
+					sleep(2);
+					goto pilihelektronik;
+				}
+				else if (strcmp(st, "disable") == 0){
+					if (control[indeks - 1].fan % 2 == 0) {
+						printf("ELEKTRONIK SUDAH RUSAK\n");
+					}
+					else if (control[indeks - 1].fan == 3){
+						printf("ELEKTRONIK SUDAH DINONAKTIFKAN\n");
+					}
+					else {
+						
+						printf("\nMENONAKTIFKAN ELEKTRONIK . . .\n");
+						sleep(1);
+						printf("\nMENGAPA ELEKTRONIK DINONAKTIFKAN\nRUSAK\nMAINTENANCE\n: ");
+						
+						disfan:
+						scanf("%s", &pseudopilihan);
+						fflush(stdin);
+						if (strcmp(pseudopilihan, "rusak") == 0){
+							printf("\n\nELEKTRONIK DINYATAKAN RUSAK\n");
+							sleep(1);
+							loading();
+							printf("\n\n	STATUS TELAH BERUBAH\n");
+							control[indeks - 1].fan = 2;
+						}
+						else if (strcmp(pseudopilihan, "maintenance") == 0){
+							printf("\n\nELEKTRONIK PERLU MAINTENANCE\n");
+							sleep(1);
+							loading();
+							printf("\n\n	STATUS TELAH DIUBAH\n");
+							control[indeks - 1].fan = 3;
+						}
+						else {
+							printf("INVALID MENU");
+							system("cls");
+							goto disfan;
+						}
+					}
+					sleep(2);
+					goto pilihelektronik;
+				}
+				else if (strcmp(st, "troubleshoot") == 0){
+					if (control[indeks - 1].fan < 2) {
+						printf("ELEKTRONIK BERFUNGSI, TROUBLESHOOT TIDAK BISA DIJALANKAN\n");
+					}
+					else if (control[indeks - 1].fan == 2){
+						printf("ELEKTRONIK RUSAK, LAKUKAN PERBAIKAN MANUAL\n");
+					}
+					else {
+						printf("MENCOBA MEMPERBAIKI ELEKTRONIK\n");
+						sleep(1);
+						loading();
+						int random = rand() % 100;
+						if (random < 70){
+							printf("\n\n	GAGAL DIPERBAIKI\n	SILAHKAN COBA KEMBALI\n");
+						}
+						else {
+							printf("\n\n	PERBAIKAN BERHASIL\n");
+							control[indeks - 1].fan = 0;
+						}
+					}
+					sleep(2);
+					goto pilihelektronik;
+				}
+				else {
+					printf("INVALID MENU");
+					fflush(stdin);
+					sleep(1);
+					goto pilihelektronik;
+				}			
+			}
+			else if (strcmp(con, "keluar") == 0){
+				return terminal(control, logindata);
+			}
+			else {
+				printf("INVALID MENU");
+				goto pilihelektronik;
+			}
+	}
+	else if (strcmp(pilihan, "menu") == 0){
+		return buletinboard(control, logindata);
+	}
+	else {
+		printf("INVALID MENU");
+		sleep(2);
+		return terminal(control, logindata);
 	}
 }
 
 int changer(struct ruangan *control, struct user *logindata){
-	int pilihan;
-	printf("1. Username\n2. Password\n3. Keluar\nPilih yang akan diganti\n: ");
-	scanf("%d", &pilihan);
-	switch (pilihan){
-		case(1):
-        	printf("Masukkan Username Baru: ");
-        	scanf("%[^\n]s", &logindata[0].username);
-        	printf("Username Berhasil Diubah!\n");
-        	sleep(2);
+	char pilihan;
+	system("cls");
+	printf("\n\nSMART OFFICE SYSTEM\n\n");
+	printf("Apakah ingin melakukan reset akun?(y/n)\n: ");
+	scanf(" %c", &pilihan);
+	if (pilihan == 'y'){
+		
+		//mengganti username
+		username:
+			system("cls");
+			printf("\n\nSMART OFFICE SYSTEM\n\n");
+			printf("Masukkan Username Baru: ");
+        	scanf("%s", &logindata[0].username);
+        	printf("\nKonfirmasi Username Baru: ");
+        	scanf("%s", &logindata[2].username);
+        	if (strcmp(logindata[0].username, logindata[2].username) == 0){
+        		printf("\n\nUSERNAME BERHASIL DIUBAH!\n");
+			}
+        	else {
+        		printf("\n\nUSERNAME TIDAK COCOK\n");
+        		sleep(3);
+        		goto username;
+			}
+       		sleep(3);
+        
+        //mengganti password
+        password:
+        	system("cls");
+        	printf("\n\nSMART OFFICE SYSTEM\n\n");
+        	printf("Masukkan password baru: ");
+        	scanf("%s", &logindata[0].password);
+        	printf("\nKonfirmasi password baru: ");
+        	scanf("%s", &logindata[2].password);
+        	if (strcmp(logindata[0].password, logindata[2].password) == 0){
+        		printf("\n\nPASSWORD BERHASIL DIUBAH!\n");
+			}
+       		else {
+        		printf("\n\nPASSWORD TIDAK COCOK\n");
+        		sleep(3);
+        		goto password;
+			}
+        	sleep(3);
         	return prelogin(control, logindata);
-        	break;
-        case(2):
-        	printf("Masukkan Password Baru: ");
-        	scanf("%[^\n]s", &logindata[0].password);
-        	printf("Password Berhasil Diubah!\n");
-        	sleep(2);
-        	return prelogin(control, logindata);
-        	break;
-        case(3):
-        	return buletinboard(control, logindata);
-        	break;
-        default:
-			printf("INVALID MENU");
-			fflush(stdin);
-			return changer(control, logindata);
-			break;
+	}
+	else if (pilihan == 'n') {
+		printf("\nPROSES DIBATALKAN, MENGEMBALIKAN KE MENU");
+		sleep(3);
+		return buletinboard(control, logindata);
+	}
+	else {
+		printf("\nINVALID MENU");
+		fflush(stdin);
+		return changer(control, logindata);
 	}
 }
 
 int help(struct ruangan *control, struct user *logindata){
-	printf("Fitur Belum Ditambahkan");
-	return buletinboard(control);
+	char pilihan[10];
+	system("cls");
+	printf("\n\nSMART OFFICE SYSTEM\n\n");
+	printf("Gunakan 'Kontrol Elektronik' untuk melakukan Kendali ON/OFF Elektronik pada Ruangan\n");
+	printf("Gunakan 'Status dan Maintenance' untuk melakukan Aktivasi/Deaktivasi, Check dan Perbaikan pada Elektronik\n");
+	printf("Gunakan 'Reset Akun' untuk Melakukan penggantian username dan password yang digunakan untuk login Smart Office System\n");
+	
+	printf("\n\nKeluar\n: ");
+	if (strcmp(pilihan, "keluar") == 0){
+		return buletinboard(control, logindata);
+	}
+	else {
+		printf("INVALID MENU");
+		fflush(stdin);
+		return help(control, logindata);
+	}
 }
 
 int credits(struct ruangan *control, struct user *logindata){
+	char pilihan[10];
 	system("cls");
-	printf("Kelompok 07 - Daskom 02\n");
+	printf("\n\nSMART OFFICE SYSTEM");
+	printf("\n\nKelompok 07 - Daskom 02\n");
 	printf("Raffly Putera Wibowo, 2206062693");
 	printf("\nRadhitya Gibran Prasentianto, 2206062522");
-	printf("\n\nTerimakasih Kepada\n1. Five Nights at Freddy's\n2. Lethal Company\n3. Alexander Prizias\n4. Jonathan Rio Wicaksono");
-	sleep(3);
-	return buletinboard(control);
+	printf("\n\nVersi 3.0");
+	printf("\n\nTerimakasih Kepada\n1. Five Nights at Freddy's\n2. Lethal Company\n3. Alexander Prizias\n4. Jonathan Rio Wicaksono\n");
+	
+	printf("\n\nKeluar\n: ");
+	if (strcmp(pilihan, "keluar") == 0){
+		return buletinboard(control, logindata);
+	}
+	else {
+		printf("INVALID MENU");
+		fflush(stdin);
+		return help(control, logindata);
+	}
 }
 
 int buletinboard(struct ruangan *control, struct user *logindata){
-	sleep(3);
 	system("cls");
-	int pilihan;
-	printf("1. Kontrol Elektronik\n2. Perubahan Status Elektronik\n3. Ubah Username dan Password\n4. Bantuan\n5. Credits\n6. Exit\n: ");
-	scanf("%d", &pilihan);
-	switch (pilihan){
-		case (1):
-			ctos(control, logindata);
-			break;
-		case(2):
-			terminal(control, logindata);
-			break;
-		case(3):
-			changer(control, logindata);
-			break;
-		case(4):
-			help(control, logindata);
-			break;
-		case(5):
-			credits(control, logindata);
-			break;
-		case(6):
-			return prelogin(control, logindata);
-			break;
-		default:
-			puts("INVALID MENU");
-			sleep(1);
-			return buletinboard(control, logindata);
-			break;
+	printf("\n\nSMART OFFICE SYSTEM");
+	char pilihan[10];
+	printf("\n\nKontrol Elektronik\nService and Maintenance\nReset Akun\nManual\nAbout\nExit\n: ");
+	scanf("%s", &pilihan);
+	if (strcmp(pilihan, "kontrol") == 0){
+		fflush(stdin);
+		ctos(control, logindata);
+	}
+	else if (strcmp(pilihan, "servis") == 0){
+		fflush(stdin);
+		terminal(control, logindata);
+	}
+	else if (strcmp(pilihan, "reset") == 0){
+		fflush(stdin);
+		changer(control, logindata);
+	}
+	else if (strcmp(pilihan, "manual") == 0){
+		fflush(stdin);
+		help(control, logindata);
+	}
+	else if (strcmp(pilihan, "about") == 0){
+		fflush(stdin);
+		credits(control, logindata);
+	}
+	else if (strcmp(pilihan, "exit") == 0){
+		return prelogin(control, logindata);
+	}
+	else {
+		puts("\nINVALID MENU");
+		fflush(stdin);
+		sleep(2);
+		return buletinboard(control, logindata);
 	}
 }
 
 int main(){
-	struct user *logindata = (struct user*)malloc(2 * sizeof(struct user));
+	int retval;
+	struct user *logindata = (struct user*)malloc(3 * sizeof(struct user));
 	struct ruangan *control = (struct ruangan*)malloc(9 * sizeof(struct ruangan));
 
 	start(control, logindata);	
