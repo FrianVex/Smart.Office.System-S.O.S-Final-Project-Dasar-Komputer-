@@ -159,7 +159,7 @@ int ctos(struct ruangan *control, struct user *logindata){
 					sleep(1);
 					loading();
 					printf("\n\n  Elektronik Berhasil Dimatikan\n");
-					control[indeks - 1].door = 1;
+					control[indeks - 1].door = 0;
 					sleep(2);
 					goto pilihelektronik;
 				}
@@ -184,7 +184,7 @@ int ctos(struct ruangan *control, struct user *logindata){
 					sleep(1);
 					loading();
 					printf("\n\n  Elektronik Berhasil Dimatikan\n");
-					control[indeks - 1].ac = 1;
+					control[indeks - 1].ac = 0;
 					sleep(2);
 					goto pilihelektronik;
 				}
@@ -209,7 +209,7 @@ int ctos(struct ruangan *control, struct user *logindata){
 					sleep(1);
 					loading();
 					printf("\n\n  Elektronik Berhasil Dimatikan\n");
-					control[indeks - 1].lights = 1;
+					control[indeks - 1].lights = 0;
 					sleep(2);
 					goto pilihelektronik;
 				}
@@ -234,7 +234,7 @@ int ctos(struct ruangan *control, struct user *logindata){
 					sleep(1);
 					loading();
 					printf("\n\n  Elektronik Berhasil Dimatikan\n");
-					control[indeks - 1].fan = 1;
+					control[indeks - 1].fan = 0;
 					sleep(2);
 					goto pilihelektronik;
 				}
